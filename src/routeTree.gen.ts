@@ -10,33 +10,103 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DescobrirRouteImport } from './routes/descobrir'
+import { Route as DestaquesRouteImport } from './routes/destaques'
+import { Route as EmpresaRouteImport } from './routes/empresa'
+import { Route as MelhoresDoAnoRouteImport } from './routes/melhores-do-ano'
+import { Route as NegocioRestauranteExemploRouteImport } from './routes/negocio.restaurante-exemplo'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DescobrirRoute = DescobrirRouteImport.update({
+  id: '/descobrir',
+  path: '/descobrir',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DestaquesRoute = DestaquesRouteImport.update({
+  id: '/destaques',
+  path: '/destaques',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmpresaRoute = EmpresaRouteImport.update({
+  id: '/empresa',
+  path: '/empresa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MelhoresDoAnoRoute = MelhoresDoAnoRouteImport.update({
+  id: '/melhores-do-ano',
+  path: '/melhores-do-ano',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NegocioRestauranteExemploRoute =
+  NegocioRestauranteExemploRouteImport.update({
+    id: '/negocio/restaurante-exemplo',
+    path: '/negocio/restaurante-exemplo',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/destaques': typeof DestaquesRoute
+  '/empresa': typeof EmpresaRoute
+  '/melhores-do-ano': typeof MelhoresDoAnoRoute
+  '/negocio/restaurante-exemplo': typeof NegocioRestauranteExemploRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/destaques': typeof DestaquesRoute
+  '/empresa': typeof EmpresaRoute
+  '/melhores-do-ano': typeof MelhoresDoAnoRoute
+  '/negocio/restaurante-exemplo': typeof NegocioRestauranteExemploRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/destaques': typeof DestaquesRoute
+  '/empresa': typeof EmpresaRoute
+  '/melhores-do-ano': typeof MelhoresDoAnoRoute
+  '/negocio/restaurante-exemplo': typeof NegocioRestauranteExemploRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/descobrir'
+    | '/destaques'
+    | '/empresa'
+    | '/melhores-do-ano'
+    | '/negocio/restaurante-exemplo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/descobrir'
+    | '/destaques'
+    | '/empresa'
+    | '/melhores-do-ano'
+    | '/negocio/restaurante-exemplo'
+  id:
+    | '__root__'
+    | '/'
+    | '/descobrir'
+    | '/destaques'
+    | '/empresa'
+    | '/melhores-do-ano'
+    | '/negocio/restaurante-exemplo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DescobrirRoute: typeof DescobrirRoute
+  DestaquesRoute: typeof DestaquesRoute
+  EmpresaRoute: typeof EmpresaRoute
+  MelhoresDoAnoRoute: typeof MelhoresDoAnoRoute
+  NegocioRestauranteExemploRoute: typeof NegocioRestauranteExemploRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +118,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/descobrir': {
+      id: '/descobrir'
+      path: '/descobrir'
+      fullPath: '/descobrir'
+      preLoaderRoute: typeof DescobrirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/destaques': {
+      id: '/destaques'
+      path: '/destaques'
+      fullPath: '/destaques'
+      preLoaderRoute: typeof DestaquesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/empresa': {
+      id: '/empresa'
+      path: '/empresa'
+      fullPath: '/empresa'
+      preLoaderRoute: typeof EmpresaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/melhores-do-ano': {
+      id: '/melhores-do-ano'
+      path: '/melhores-do-ano'
+      fullPath: '/melhores-do-ano'
+      preLoaderRoute: typeof MelhoresDoAnoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/negocio/restaurante-exemplo': {
+      id: '/negocio/restaurante-exemplo'
+      path: '/negocio/restaurante-exemplo'
+      fullPath: '/negocio/restaurante-exemplo'
+      preLoaderRoute: typeof NegocioRestauranteExemploRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DescobrirRoute: DescobrirRoute,
+  DestaquesRoute: DestaquesRoute,
+  EmpresaRoute: EmpresaRoute,
+  MelhoresDoAnoRoute: MelhoresDoAnoRoute,
+  NegocioRestauranteExemploRoute: NegocioRestauranteExemploRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
