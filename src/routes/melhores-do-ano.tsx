@@ -1,0 +1,19 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { ArrowRight, Award, CalendarDays } from "lucide-react";
+import coastImg from "@/assets/jampa-coast.jpg";
+import { AppBadge, SectionTitle } from "@/components/platform";
+import { Button } from "@/components/ui/button";
+import { awardYears, winners } from "@/lib/mock-data";
+
+export const Route = createFileRoute("/melhores-do-ano")({ head: () => ({ meta: [
+  { title: "Melhores do Ano João Pessoa — Edições" }, { name: "description", content: "Conheça a história e os vencedores fictícios das edições do Melhores do Ano João Pessoa." },
+  { property: "og:title", content: "Melhores do Ano João Pessoa" }, { property: "og:description", content: "Uma celebração de quem faz parte da cidade." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+] }), component: AwardsPage });
+
+function AwardsPage() {
+  const [year, setYear] = useState(2025);
+  const selectedWinners = winners[year] ?? winners[2025];
+  return <><section className="relative min-h-[70svh] overflow-hidden bg-primary text-primary-foreground"><img src={coastImg} alt="João Pessoa vista do litoral" width={1600} height={912} className="absolute inset-0 h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/75 to-primary/25" /><div className="shell relative flex min-h-[70svh] items-center py-16"><div className="max-w-3xl"><span className="grid size-14 place-items-center rounded-full bg-award text-award-foreground"><Award className="size-7" /></span><h1 className="mt-6 text-5xl font-bold leading-tight sm:text-7xl">Melhores do Ano João Pessoa</h1><p className="mt-5 max-w-2xl text-lg text-primary-foreground/75">Uma celebração dos negócios, profissionais e experiências que fazem parte da cidade.</p></div></div></section>
+  <section className="section-space"><div className="shell"><SectionTitle eyebrow="Arquivo da cidade" title="Confira as histórias e vencedores das edições anteriores." copy="Nesta demonstração, todos os nomes e reconhecimentos são fictícios." /><div className="flex gap-3 overflow-x-auto border-b border-border pb-5">{awardYears.map(y => <Button key={y} size="lg" variant={year === y ? "default" : "outline"} onClick={() => setYear(y)}><CalendarDays /> {y}</Button>)}</div><div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">{selectedWinners.map((business) => <article key={`${year}-${business.name}`} className="overflow-hidden rounded-lg border border-border bg-card shadow-sm animate-rise"><img src={business.image} alt={`Representação fictícia de ${business.name}`} loading="lazy" width={1408} height={1056} className="aspect-square w-full object-cover" /><div className="p-5"><AppBadge type={`Premiado ${year}`} /><p className="mt-4 text-xs font-extrabold uppercase tracking-[0.14em] text-muted-foreground">{business.category}</p><h2 className="mt-1 text-2xl font-bold">{business.name}</h2><p className="mt-2 text-sm text-muted-foreground">Reconhecimento fictício para apresentação do conceito.</p><Button asChild variant="link" className="mt-4 h-auto p-0"><Link to="/negocio/restaurante-exemplo">Conhecer história <ArrowRight /></Link></Button></div></article>)}</div><div className="mt-14 rounded-lg border border-award/40 bg-award/15 p-6"><div className="flex items-start gap-4"><Award className="mt-1 size-6 shrink-0 text-award-foreground" /><div><h2 className="text-xl font-bold">Premiação é reconhecimento</h2><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Esta área preserva a memória das edições e não está ligada às posições comerciais da página Destaques.</p></div></div></div></div></section></>;
+}

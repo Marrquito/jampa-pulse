@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DescobrirRouteImport } from './routes/descobrir'
+import { Route as DestaquesRouteImport } from './routes/destaques'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DescobrirRoute = DescobrirRouteImport.update({
+  id: '/descobrir',
+  path: '/descobrir',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DestaquesRoute = DestaquesRouteImport.update({
+  id: '/destaques',
+  path: '/destaques',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/destaques': typeof DestaquesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/destaques': typeof DestaquesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/descobrir': typeof DescobrirRoute
+  '/destaques': typeof DestaquesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/descobrir' | '/destaques'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/descobrir' | '/destaques'
+  id: '__root__' | '/' | '/descobrir' | '/destaques'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DescobrirRoute: typeof DescobrirRoute
+  DestaquesRoute: typeof DestaquesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/descobrir': {
+      id: '/descobrir'
+      path: '/descobrir'
+      fullPath: '/descobrir'
+      preLoaderRoute: typeof DescobrirRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/destaques': {
+      id: '/destaques'
+      path: '/destaques'
+      fullPath: '/destaques'
+      preLoaderRoute: typeof DestaquesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DescobrirRoute: DescobrirRoute,
+  DestaquesRoute: DestaquesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
