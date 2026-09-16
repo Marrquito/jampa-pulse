@@ -1,1 +1,0 @@
-var e=`/jampa-pulse/assets/jampa-coast-BF2mUulc.jpg`;export{e as t};
