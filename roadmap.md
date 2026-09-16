@@ -8,4 +8,4 @@
 - [x] Criar Perfil do negócio
 - [x] Criar Melhores do Ano
 - [x] Criar Para empresas e formulário demonstrativo
-- [ ] Validar compilação, navegação e experiência mobile
+- [x] Validar compilação, navegação e experiência mobile
