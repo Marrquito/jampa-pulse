@@ -36,7 +36,7 @@ export const awardYears = [2025, 2024, 2023, 2022];
 
 export const winners: Record<number, Business[]> = {
   2025: businesses.slice(0, 5),
-  2024: [businesses[5], businesses[1], businesses[7], businesses[3], businesses[4]],
-  2023: [businesses[0], businesses[6], businesses[2], businesses[3], businesses[4]],
-  2022: [businesses[5], businesses[1], businesses[7], businesses[3], businesses[4]],
+  2024: businesses.slice(1, 6),
+  2023: businesses.slice(2, 7),
+  2022: businesses.slice(3, 8),
 };
