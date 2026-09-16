@@ -4,10 +4,10 @@ Concordo com as duas mudanças: elas deixam mais honesto o fato de que destaque 
 
 ## 1. Selos combinados nos destaques
 
-- Todo negócio que aparece em Destaques passa a exibir "Patrocinado" e "Em destaque", já que a posição é paga.
-- Um mesmo negócio pode mostrar vários selos ao mesmo tempo (ex.: "Novo" + "Em destaque" + "Patrocinado").
+- Todo negócio que aparece em Destaques passa a exibir  "Em destaque", já que a posição é paga.
+- Um mesmo negócio pode mostrar vários selos ao mesmo tempo (ex.: "Novo" + "Em destaque" ).
 - Quando o negócio já foi vencedor de alguma edição, o selo de premiação aparece junto (ex.: "Melhor do Ano 2022"), com o visual dourado que já diferencia premiação de publicidade.
-- Ordem visual fixa dos selos: premiação primeiro (dourado), depois em alta, depois destaque/patrocinado — para o olho separar reconhecimento de espaço comercial.
+- Ordem visual fixa dos selos: premiação primeiro (dourado), depois em alta, depois destaque— para o olho separar reconhecimento de espaço comercial.
 - Em telas pequenas os selos quebram em duas linhas em vez de cortar.
 
 ## 2. Posições em "Destaques da semana" (home)
@@ -28,3 +28,4 @@ Concordo com as duas mudanças: elas deixam mais honesto o fato de que destaque 
 - `src/routes/index.tsx`: remove `SearchBar` do hero, adiciona os dois CTAs, passa `rank` aos cards de destaque.
 - `src/routes/destaques.tsx`, `descobrir.tsx`, `melhores-do-ano.tsx`, `negocio.restaurante-exemplo.tsx`: adaptados ao novo formato de selos.
 - Verificação: build limpo e conferência visual da home e de Destaques em desktop e celular.
+- retirar a tag "Patrocinado"

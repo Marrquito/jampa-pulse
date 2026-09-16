@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Award, Coffee, Dumbbell, Flame, Martini, Search, ShoppingBag, Sparkles, Utensils, BedDouble, PartyPopper, Wrench, MapPin, TrendingUp } from "lucide-react";
-import type { Business } from "@/lib/mock-data";
+import { latestAward, type Business } from "@/lib/mock-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -16,13 +16,24 @@ export function SearchBar({ placeholder = "O que você está procurando?", dark 
 }
 
 export function AppBadge({ type }: { type: string }) {
-  const award = type.includes("Melhores") || type.includes("Premiado");
-  const trend = type.includes("alta") || type.includes("Subindo");
+  const award = type.includes("Melhor") || type.includes("Premiado");
+  const trend = type.includes("alta") || type.includes("Subindo") || type.includes("Novo");
   return <span className={cn("inline-flex w-fit items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold", award ? "bg-award text-award-foreground" : trend ? "bg-sea text-sea-foreground" : "bg-highlight text-highlight-foreground")}>{award ? <Award className="size-3" /> : trend ? <TrendingUp className="size-3" /> : <Flame className="size-3" />}{type}</span>;
 }
 
-export function BusinessCard({ business, compact = false }: { business: Business; compact?: boolean }) {
-  return <article className="group overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"><div className={cn("overflow-hidden", compact ? "aspect-[16/10]" : "aspect-[4/3]")}><img src={business.image} alt={`Ambiente ilustrativo de ${business.name}`} loading="lazy" width={1408} height={1056} className="h-full w-full object-cover image-lift" /></div><div className="p-5">{business.badge && <AppBadge type={business.badge} />}<h3 className="mt-3 text-2xl font-bold">{business.name}</h3><p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground"><span>{business.category}</span><span>•</span><MapPin className="size-3.5" />{business.neighborhood}</p><Button asChild variant="link" className="mt-4 h-auto p-0"><Link to="/negocio/restaurante-exemplo">Ver negócio <ArrowRight /></Link></Button></div></article>;
+export function BadgeRow({ business, className }: { business: Business; className?: string }) {
+  const year = latestAward(business);
+  const trend = business.badges.filter((b) => b !== "Em destaque");
+  const featured = business.badges.includes("Em destaque");
+  return <div className={cn("flex flex-wrap gap-1.5", className)}>
+    {year && <AppBadge type={`Melhor do Ano ${year}`} />}
+    {trend.map((b) => <AppBadge key={b} type={b} />)}
+    {featured && <AppBadge type="Em destaque" />}
+  </div>;
+}
+
+export function BusinessCard({ business, compact = false, rank }: { business: Business; compact?: boolean; rank?: number }) {
+  return <article className="group overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"><div className={cn("relative overflow-hidden", compact ? "aspect-[16/10]" : "aspect-[4/3]")}><img src={business.image} alt={`Ambiente ilustrativo de ${business.name}`} loading="lazy" width={1408} height={1056} className="h-full w-full object-cover image-lift" />{rank && <span className="absolute left-4 top-4 grid size-11 place-items-center rounded-full bg-highlight font-display text-lg font-bold text-highlight-foreground shadow-lg">{String(rank).padStart(2, "0")}</span>}</div><div className="p-5"><BadgeRow business={business} /><h3 className="mt-3 text-2xl font-bold">{business.name}</h3><p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground"><span>{business.category}</span><span>•</span><MapPin className="size-3.5" />{business.neighborhood}</p><Button asChild variant="link" className="mt-4 h-auto p-0"><Link to="/negocio/restaurante-exemplo">Ver negócio <ArrowRight /></Link></Button></div></article>;
 }
 
 export function CategoryCard({ label, icon, selected, onClick }: { label: string; icon: keyof typeof icons; selected?: boolean; onClick?: () => void }) {
@@ -31,7 +42,7 @@ export function CategoryCard({ label, icon, selected, onClick }: { label: string
 }
 
 export function RankingItem({ business, rank }: { business: Business; rank: number }) {
-  return <article className="group grid grid-cols-[auto_72px_minmax(0,1fr)_auto] items-center gap-3 border-b border-border py-5 animate-rise sm:grid-cols-[64px_112px_minmax(0,1fr)_auto] sm:gap-6"><span className="font-display text-3xl font-bold text-muted-foreground/50">{String(rank).padStart(2, "0")}</span><img src={business.image} alt="" loading="lazy" width={1408} height={1056} className="aspect-square w-full rounded-md object-cover" /><div className="min-w-0"><h3 className="truncate text-xl font-bold">{business.name}</h3><p className="truncate text-sm text-muted-foreground">{business.category} · {business.neighborhood}</p><div className="mt-2 sm:hidden"><AppBadge type={business.badge ?? "Em destaque"} /></div></div><div className="hidden sm:block"><AppBadge type={business.badge ?? "Em destaque"} /></div></article>;
+  return <article className="group grid grid-cols-[auto_72px_minmax(0,1fr)] items-center gap-3 border-b border-border py-5 animate-rise sm:grid-cols-[64px_112px_minmax(0,1fr)_auto] sm:gap-6"><span className="font-display text-3xl font-bold text-muted-foreground/50">{String(rank).padStart(2, "0")}</span><img src={business.image} alt="" loading="lazy" width={1408} height={1056} className="aspect-square w-full rounded-md object-cover" /><div className="min-w-0"><h3 className="truncate text-xl font-bold">{business.name}</h3><p className="truncate text-sm text-muted-foreground">{business.category} · {business.neighborhood}</p><BadgeRow business={business} className="mt-2 sm:hidden" /></div><BadgeRow business={business} className="hidden justify-end sm:flex" /></article>;
 }
 
 export function AwardCard({ year, image }: { year: number; image: string }) {
